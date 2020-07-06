@@ -25,29 +25,19 @@ fetch(root + `weather?id=${clujId}&appid=${apiKey}`, {
 
         return temperature;
     })
-    .then(function (temperature){
+    .then(function (temperature) {
 
-        if(window.localStorage.getItem("unit") === "farenheit" || document.cookie === "unit=farenheit"){
-            tempSel.innerText = convertToFarenheit(temperature.temp);
-            feelSel.innerText = convertToFarenheit(temperature.feels_like);
-            tempMinSel.innerText = convertToFarenheit(temperature.temp_min);
-            tempMaxSel.innerText = convertToFarenheit(temperature.temp_max);
-            humSel.innerText = temperature.humidity;
-            presSel.innerText = temperature.pressure;
+        if (window.localStorage.getItem("unit") === "farenheit" || document.cookie === "unit=farenheit") {
+            renderToFarenheit(temperature);
         }
 
-        if(window.localStorage.getItem("unit") === "celsius" || document.cookie === "unit=celsius"){
-            tempSel.innerText = convertToCelsius(temperature.temp);
-            feelSel.innerText = convertToCelsius(temperature.feels_like);
-            tempMinSel.innerText = convertToCelsius(temperature.temp_min);
-            tempMaxSel.innerText = convertToCelsius(temperature.temp_max);
-            humSel.innerText = temperature.humidity;
-            presSel.innerText = temperature.pressure;
+        if (window.localStorage.getItem("unit") === "celsius" || document.cookie === "unit=celsius") {
+            renderToCelsius(temperature);
         }
 
     })
-    
-//Selectors//
+
+//*** Selectors ***//
 const tempSel = document.querySelector('.temperature p span');
 const feelSel = document.querySelector('.feels-like p span');
 const tempMinSel = document.querySelector('.temp-min p span');
@@ -55,7 +45,28 @@ const tempMaxSel = document.querySelector('.temp-max p span');
 const humSel = document.querySelector('.humidity p span');
 const presSel = document.querySelector('.pressure p span');
 
-const convertToCelsius = (degrees) => (degrees - 273.15).toFixed(2);
-const convertToFarenheit = (degrees) => ((degrees - 273.15) * 9/5 + 32).toFixed(2);
+//*** Render and conversion ***/
+
+function renderToFarenheit(temperature) {
+    tempSel.innerText = convertToFarenheit(temperature.temp);
+    feelSel.innerText = convertToFarenheit(temperature.feels_like);
+    tempMinSel.innerText = convertToFarenheit(temperature.temp_min);
+    tempMaxSel.innerText = convertToFarenheit(temperature.temp_max);
+    humSel.innerText = temperature.humidity;
+    presSel.innerText = temperature.pressure;
+}
+
+function renderToCelsius(temperature) {
+    tempSel.innerText = convertToCelsius(temperature.temp);
+    feelSel.innerText = convertToCelsius(temperature.feels_like);
+    tempMinSel.innerText = convertToCelsius(temperature.temp_min);
+    tempMaxSel.innerText = convertToCelsius(temperature.temp_max);
+    humSel.innerText = temperature.humidity;
+    presSel.innerText = temperature.pressure;
+
+}
+
+const convertToCelsius = (degrees) => (degrees - 273.15).toFixed(1);
+const convertToFarenheit = (degrees) => ((degrees - 273.15) * 9 / 5 + 32).toFixed(1);
 
 
